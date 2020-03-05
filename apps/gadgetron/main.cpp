@@ -98,6 +98,8 @@ int ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   boost::filesystem::path gadgetron_home = get_gadgetron_home();
   boost::filesystem::path config_file = gadgetron_home / GADGETRON_CONFIG_PATH / "gadgetron.xml";
 
+  GINFO("Starting Gadgetron (version %s)\n", GADGETRON_VERSION_STRING);
+	
   if (!boost::filesystem::exists(config_file)) {
     GERROR_STREAM("Gadgetron configuration file not found: " << config_file << std::endl);
     return -1;
