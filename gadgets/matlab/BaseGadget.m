@@ -23,16 +23,27 @@ classdef BaseGadget < handle
         % Process function
         function [Q] = run_process(g, htype, hdr_bytes, data)
             if (htype == 1)
-                head = ismrmrd.AcquisitionHeader(hdr_bytes);
+                if isa(data,'cell') % allow cell array to reduce Matlab engine overhead
+                    if numel(hdr_bytes)~=numel(data) || ~isa(hdr_bytes,'cell')
+                        error('Cell array mis-match between hdr_bytes and data.')
+                    end
+                    for j = 1:numel(hdr_bytes)
+                        head = ismrmrd.AcquisitionHeader(hdr_bytes{j});
+                        g.process(head, data{j});
+                    end
+                else
+                    head = ismrmrd.AcquisitionHeader(hdr_bytes);
+                    g.process(head, data);
+                end
             elseif (htype == 2)
                 head = ismrmrd.ImageHeader(hdr_bytes);
+                g.process(head, data);
             else
-                error('Uknown header type.');
+                error('Unknown header type.');
             end
-            g.process(head, data);
             Q = g.Q;
         end
-
+        
         % Config function
         function config(g)
             fprintf('%s\n',char(serialize(g.xml)));
@@ -63,10 +74,9 @@ classdef BaseGadget < handle
             else
                 % TODO: do we throw an error here?
                 g.Q(idx).type = int32(0);
-		disp('Illegal header type found')
+		        disp('Illegal header type found')
             end
-            % put the data on the queue
-            % make sure the data is single precision
+            % put data on the queue (MUST be single)
             g.Q(idx).data = single(data);
         end
 
