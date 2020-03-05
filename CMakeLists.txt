@@ -277,6 +277,11 @@ option(USE_CUDA "Build with CUDA support" On)
 if (USE_CUDA)
 find_package(CUDA_advanced)
 endif()
+
+if (NOT CUDA_cublas_device_LIBRARY)
+list(REMOVE_ITEM CUDA_CUBLAS_LIBRARIES CUDA_cublas_device_LIBRARY-NOTFOUND)
+endif()
+
 if (CUDA_FOUND AND USE_CUDA)
   add_definitions(-DUSE_CUDA)
   set( GADGETRON_CUDA_FOUND_BOOL 1 )
