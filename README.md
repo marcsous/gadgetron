@@ -1,9 +1,9 @@
 GADGETRON IMAGE RECONSTRUCTION FRAMEWORK
 ========================================
 
-1. FORKED FROM 3.17_stable BRANCH AND MODIFIED
+1. Forked from 3.17_stable to resurrect the Matlab Acquisition Gadget
 
-2. INSTALL SOME DEPENDENCIES
+2. Need to install the following dependencies:
 
 sudo apt-get install libhdf5-serial-dev cmake git-core \
 libboost-all-dev build-essential libfftw3-dev h5utils \
@@ -12,4 +12,4 @@ libxslt-dev libarmadillo-dev libace-dev python-h5py \
 python-matplotlib python-libxml2 gcc-multilib python-psutil \
 libgtest-dev libplplot-dev csh libatlas-base-dev
 
-3. EXECUTE SCRIPT GT_install3.17.sh TO INSTALL
+3. Execute GT_install3.17.sh to install without root
