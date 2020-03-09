@@ -139,6 +139,10 @@ endif(NOT ACE_FOUND)
 
 find_package(CUDA_advanced)
 
+if (NOT CUDA_cublas_device_LIBRARY)
+list(REMOVE_ITEM CUDA_CUBLAS_LIBRARIES CUDA_cublas_device_LIBRARY-NOTFOUND)
+endif()
+
 if (CUDA_FOUND)
   ADD_DEFINITIONS(-DUSE_CUDA)
   SET( GADGETRON_CUDA_FOUND_BOOL 1 )
