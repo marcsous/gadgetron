@@ -174,7 +174,7 @@ int AcquisitionMatlabGadget::process(GadgetContainerMessage<ISMRMRD::Acquisition
 	    {
 	        for (int i = 0; i < m4->getObjectPtr()->get_number_of_elements(); i++)
     	        {
-        	        m4->getObjectPtr()->get_data_ptr()[i] = std::complex<float>(data[i].real(),data[i].real());
+        	        m4->getObjectPtr()->get_data_ptr()[i] = std::complex<float>(data[i].real,data[i].imag);
             	}
 	    }	
 #else

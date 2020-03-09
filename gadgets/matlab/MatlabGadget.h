@@ -262,7 +262,8 @@ protected:
 		mxComplexSingle* data = mxGetComplexSingles(acq_data);
 		for(size_t i = 0; i<acq->number_of_samples*acq->active_channels; i++)
 		{
-			data[i] = raw_data[i];
+			data[i].real = raw_data[i].real();
+			data[i].imag = raw_data[i].imag();
 		}
 #else
 		float *real = (float *)mxGetData(acq_data);
