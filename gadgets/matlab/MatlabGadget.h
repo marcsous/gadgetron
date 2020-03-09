@@ -257,6 +257,14 @@ protected:
 			GDEBUG("Couldn't allocate acq_data\n");
 			return GADGET_FAIL;
 		}
+
+#ifdef MX_HAS_INTERLEAVED_COMPLEX
+		mxComplexSingle* data = mxGetComplexSingles(acq_data);
+		for(size_t i = 0; i<acq->number_of_samples*acq->active_channels; i++)
+		{
+			data[i] = raw_data[i];
+		}
+#else
 		float *real = (float *)mxGetData(acq_data);
 		float *imag = (float *)mxGetImagData(acq_data);
 		for(size_t i = 0; i<acq->number_of_samples*acq->active_channels; i++)
@@ -264,6 +272,7 @@ protected:
 			real[i] = raw_data[i].real();
 			imag[i] = raw_data[i].imag();
 		}
+#endif
 
 		// Update cell array
 		mxSetCell(buffer_data_, M, acq_data);
