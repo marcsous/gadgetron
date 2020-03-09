@@ -12,7 +12,7 @@ libxslt-dev libarmadillo-dev libace-dev python-h5py \
 python-matplotlib python-libxml2 gcc-multilib python-psutil \
 libgtest-dev libplplot-dev csh libatlas-base-dev
 ```
-3. Execute GT_install3.17.sh to install without root
+3. Execute ```GT_install3.17.sh``` to install without root
 
 4. Add to .bashrc
 ```
