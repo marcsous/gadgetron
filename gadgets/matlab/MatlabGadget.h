@@ -2,7 +2,7 @@
 
 #include "gadgetron_matlab_export.h"
 #include "Gadget.h"
-#include "gadgetron_paths.h"
+//#include "gadgetron_paths.h"
 #include "hoNDArray.h"
 #include "ismrmrd/ismrmrd.h"
 #include "log.h"
@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <complex>
 #include <boost/lexical_cast.hpp>
+#include "gadgetron_home.h"
 
 // TODO:
 //Make the port option work so that we can have multiple matlabs running, each with its own command server.
@@ -65,7 +66,7 @@ public:
 
             // Add the necessary paths to the matlab environment
             // Java matlab command server
-            std::string gadgetron_matlab_path = get_gadgetron_home() + "/share/gadgetron/matlab";
+            std::string gadgetron_matlab_path = get_gadgetron_home().string() + "/share/gadgetron/matlab";
             std::string java_add_path_cmd = std::string("javaaddpath('") + gadgetron_matlab_path + std::string("');");
             std::string add_path_cmd = std::string("addpath('") + gadgetron_matlab_path + std::string("');");
             // Gadgetron matlab scripts

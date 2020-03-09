@@ -19,8 +19,8 @@ int AcquisitionMatlabGadget::process(GadgetContainerMessage<ISMRMRD::Acquisition
         return GADGET_FAIL;
     }
 
-	// Data
-	std::complex<float> *raw_data = m2->getObjectPtr()->get_data_ptr();
+    // Data
+    std::complex<float> *raw_data = m2->getObjectPtr()->get_data_ptr();
     if (!raw_data)
     {
         GDEBUG("Broken raw_data pointer\n");
@@ -118,12 +118,20 @@ int AcquisitionMatlabGadget::process(GadgetContainerMessage<ISMRMRD::Acquisition
                 return GADGET_FAIL;
             }
 
+#ifdef MX_HAS_INTERLEAVED_COMPLEX
+	    mxComplexSingle* data = mxGetComplexSingles(res_data);
+            for (int i = 0; i < number_of_samples*active_channels; i++)
+	    {
+                m4->getObjectPtr()->get_data_ptr()[i] = std::complex<float>(data[i].real,data[i].imag);
+            }
+#else
             float *real_data = (float *)mxGetData(res_data);
             float *imag_data = (float *)mxGetImagData(res_data);
             for (int i = 0; i < number_of_samples*active_channels; i++)
             {
                 m4->getObjectPtr()->get_data_ptr()[i] = std::complex<float>(real_data[i],imag_data[i]);
             }
+#endif
 
             if (this->next()->putq(m3) < 0)
             {
@@ -160,32 +168,42 @@ int AcquisitionMatlabGadget::process(GadgetContainerMessage<ISMRMRD::Acquisition
                 return GADGET_FAIL;
             }
 
+#ifdef MX_HAS_INTERLEAVED_COMPLEX
+	    mxComplexSingle* data = mxGetComplexSingles(res_data);
+	    if (data)    
+	    {
+	        for (int i = 0; i < m4->getObjectPtr()->get_number_of_elements(); i++)
+    	        {
+        	        m4->getObjectPtr()->get_data_ptr()[i] = std::complex<float>(data[i].real(),data[i].real());
+            	}
+	    }	
+#else
             float *real_data = (float *)mxGetData(res_data);
             float *imag_data = (float *)mxGetImagData(res_data);
-
-			if (imag_data)
-			{
-	            for (int i = 0; i < m4->getObjectPtr()->get_number_of_elements(); i++)
+	    if (imag_data)
+	    {
+	        for (int i = 0; i < m4->getObjectPtr()->get_number_of_elements(); i++)
     	        {
         	        m4->getObjectPtr()->get_data_ptr()[i] = std::complex<float>(real_data[i],imag_data[i]);
-        	    }
-                if (idx==0) GDEBUG("Received %u complex images from matgadget Queue\n", qlen);
-			}
-			else if (real_data)
-			{
+            	}
+	    }
+	    else if (real_data)
+	    {
             	for (int i = 0; i < m4->getObjectPtr()->get_number_of_elements(); i++)
-        	    {
+        	{
     	            m4->getObjectPtr()->get_data_ptr()[i] = real_data[i];
-	            }
-                if (idx==0) GDEBUG("Received %u real images from matgadget Queue\n", qlen);
-			}
-			else
-			{
-                GDEBUG("Failed to mxGetData or mxGetImagData from matgadget Queue\n");
+	        }
+	    }
+#endif
+	    else
+	    {
+                GDEBUG("Failed to mxGetData from matgadget Queue\n");
                 return GADGET_FAIL;
-			}
-
-            if (this->next()->putq(m3) < 0)
+	    }
+            if (idx==0) GDEBUG("Received %u images from matgadget Queue\n", qlen);
+	
+	
+	    if (this->next()->putq(m3) < 0)
             {
                 GDEBUG("Failed to put Image message on queue\n");
                 return GADGET_FAIL;
@@ -241,14 +259,24 @@ int ImageMatlabGadget::process(GadgetContainerMessage<ISMRMRD::ImageHeader>* m1,
     mwSize dims[4] = {img->matrix_size[0], img->matrix_size[1], img->matrix_size[2], img->channels};
     mxArray *img_data = mxCreateNumericArray(ndim, dims, mxSINGLE_CLASS, mxCOMPLEX);
 
+    unsigned long num_elements = m2->getObjectPtr()->get_number_of_elements();
+
+#ifdef MX_HAS_INTERLEAVED_COMPLEX
+    mxComplexSingle* data = mxGetComplexSingles(img_data);
+    for (int i = 0; i < num_elements; i++)
+    {
+        data[i].real = raw_data[i].real();
+        data[i].imag = raw_data[i].imag();
+    }
+#else
     float *real_data = (float *)mxGetData(img_data);
     float *imag_data = (float *)mxGetImagData(img_data);
-    unsigned long num_elements = m2->getObjectPtr()->get_number_of_elements();
     for (int i = 0; i < num_elements; i++)
     {
         real_data[i] = raw_data[i].real();
         imag_data[i] = raw_data[i].imag();
     }
+#endif
 
     engPutVariable(engine_, "hdr_bytes", img_hdr_bytes);
     engPutVariable(engine_, "data", img_data);
@@ -305,12 +333,19 @@ int ImageMatlabGadget::process(GadgetContainerMessage<ISMRMRD::ImageHeader>* m1,
                 return GADGET_FAIL;
             }
 
+#ifdef MX_HAS_INTERLEAVED_COMPLEX
+	    mxComplexSingle* data = mxGetComplexSingles(res_data);
+            for (int i = 0; i < m4->getObjectPtr()->get_number_of_elements(); i++) {
+                m4->getObjectPtr()->get_data_ptr()[i] = std::complex<float>(data[i].real,data[i].imag);
+            }
+#else
             float *real_data = (float *)mxGetData(res_data);
             float *imag_data = (float *)mxGetImagData(res_data);
             for (int i = 0; i < m4->getObjectPtr()->get_number_of_elements(); i++)
             {
                 m4->getObjectPtr()->get_data_ptr()[i] = std::complex<float>(real_data[i],imag_data[i]);
             }
+#endif
 
             if (this->next()->putq(m3) < 0)
             {
