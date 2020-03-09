@@ -15,7 +15,7 @@ BUILD_TYPE=Release
 GENERATOR="Eclipse CDT4 - Unix Makefiles"
 
 # For MATLAB gadget
-MATLAB=/usr/local/MATLAB/R2017b
+MATLAB=/usr/local/MATLAB/R2019b
 
 # Disable Cuda... how?
 
@@ -135,5 +135,4 @@ make install
 # make gadgetron ready
 # ----------------------------------------------------------------------------------------------------------
 cp -f ${GT_INSTALL_DIR}/share/gadgetron/config/gadgetron.xml.example ${GT_INSTALL_DIR}/share/gadgetron/config/gadgetron.xml
-
 
