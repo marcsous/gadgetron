@@ -1,7 +1,7 @@
 echo "This script will set up Gadgetron and related libraries in the home folder."
 
 # set up the working directory to be the home folder
-GT_WORKING_DIR=/home/markbydder/gadgetron
+GT_WORKING_DIR=~/gadgetron
 GT_INSTALL_DIR=${GT_WORKING_DIR}/local
 
 # the branch to pull, can be changed
