@@ -25,7 +25,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/user/gadgetron/local/lib
 alias gadgetron="export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MATLAB_ROOT/bin/glnxa64;gadgetron"
 ```
 
-5. Add to matlab ```startup.m```
+5. Add to matlab ```~/Documents/MATLAB/startup.m```
 ```
 addpath('/home/user/gadgetron/local/share/ismrmrd/matlab/');
 addpath('/home/user/gadgetron/local/share/gadgetron/matlab/');
