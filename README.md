@@ -20,6 +20,6 @@ sudo apt-get install libhdf5-serial-dev cmake git-core \
 
 4. Add to .bashrc
 ```
+export PATH=$PATH;/home/user/gadgetron/local/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/user/gadgetron/local/lib
-alias gadgetron="/home/user/gadgetron/local/bin/gadgetron -p 9001"
 ```
