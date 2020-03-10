@@ -27,7 +27,7 @@ alias gadgetron="export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MATLAB_ROOT/bin/glnxa6
 addpath('/home/user/gadgetron/local/share/ismrmrd/matlab/');
 addpath('/home/user/gadgetron/local/share/gadgetron/matlab/');
 ```
-5. ```source ~/.bashrc``` to make sure paths are in place
+5. Execute ```source ~/.bashrc``` to make paths active
 
 6. Execute ```GT_install3.17.sh``` to install in /home/user/gadgetron (instead of /usr)
 
