@@ -14,11 +14,16 @@ BUILD_TYPE=Release
 # Generator
 GENERATOR="Eclipse CDT4 - Unix Makefiles"
 
-# For MATLAB gadget
-MATLAB=/usr/local/MATLAB/R2019b
+# Disable Cuda
+CUDA=false
 
-# Disable Cuda... how?
-
+# Check Matlab path is set
+if [ -z ${MATLAB_ROOT} ]
+then
+    echo Error! MATLAB_ROOT not set.
+    exit 1
+fi
+echo Using MATLAB_ROOT=${MATLAB_ROOT}
 
 # --------------------------------------------------------------------------------------------
 # pull source from git hub
@@ -106,8 +111,7 @@ cd ${GT_WORKING_DIR}/mrprogs
 mkdir build_gadgetron_${BUILD_TYPE}
 cd ${GT_WORKING_DIR}/mrprogs/build_gadgetron_${BUILD_TYPE}
 
-export LD_LIBRARY_PATH=
-cmake -DMATLAB_ROOT=${MATLAB} -G "${GENERATOR}" -DCMAKE_INSTALL_PREFIX=${GT_INSTALL_DIR} -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_PREFIX_PATH=${GT_WORKING_DIR}/local/lib/cmake/ISMRMRD ../gadgetron
+cmake -DUSE_CUDA=${CUDA} -G "${GENERATOR}" -DCMAKE_INSTALL_PREFIX=${GT_INSTALL_DIR} -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_PREFIX_PATH=${GT_WORKING_DIR}/local/lib/cmake/ISMRMRD ../gadgetron
 
 make -j $(nproc)
 make install
