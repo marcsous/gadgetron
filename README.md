@@ -22,4 +22,5 @@ sudo apt-get install libhdf5-serial-dev cmake git-core \
 ```
 export PATH=$PATH:/home/user/gadgetron/local/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/user/gadgetron/local/lib
+alias gadgetron="export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MATLAB_ROOT/bin/glnxa64;gadgetron"
 ```
