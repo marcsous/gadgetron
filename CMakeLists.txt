@@ -278,7 +278,7 @@ if (USE_CUDA)
 find_package(CUDA_advanced)
 endif()
 
-if (NOT CUDA_cublas_device_LIBRARY)
+if (USE_CUDA AND NOT CUDA_cublas_device_LIBRARY)
 list(REMOVE_ITEM CUDA_CUBLAS_LIBRARIES CUDA_cublas_device_LIBRARY-NOTFOUND)
 endif()
 
