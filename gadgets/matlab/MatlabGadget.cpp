@@ -169,18 +169,42 @@ int AcquisitionMatlabGadget::process(GadgetContainerMessage<ISMRMRD::Acquisition
             }
 
 #ifdef MX_HAS_INTERLEAVED_COMPLEX
-	    mxComplexSingle* data = mxGetComplexSingles(res_data);
-	    if (data)    
+	    if (mxIsComplex(res_data))
 	    {
-	        for (int i = 0; i < m4->getObjectPtr()->get_number_of_elements(); i++)
-    	        {
-        	        m4->getObjectPtr()->get_data_ptr()[i] = std::complex<float>(data[i].real,data[i].imag);
-            	}
-	    }	
+	    	mxComplexSingle* data = mxGetComplexSingles(res_data);
+	    	if (data)
+	    	{
+	        	for (int i = 0; i < m4->getObjectPtr()->get_number_of_elements(); i++)
+    	        	{
+        	        	m4->getObjectPtr()->get_data_ptr()[i] = std::complex<float>(data[i].real,data[i].imag);
+            		}
+	    	}
+    	    	else
+	    	{
+                	GDEBUG("Failed to mxGetComplexData from matgadget Queue\n");
+                	return GADGET_FAIL;
+	    	}
+	    }
+	    else
+	    {
+	    	float* data = (float *)mxGetData(res_data);
+	    	if (data)
+	    	{
+	        	for (int i = 0; i < m4->getObjectPtr()->get_number_of_elements(); i++)
+    	        	{
+        	        	m4->getObjectPtr()->get_data_ptr()[i] = data[i];
+            		}
+	    	}
+    	    	else
+	    	{
+                	GDEBUG("Failed to mxGetData from matgadget Queue\n");
+                	return GADGET_FAIL;
+	    	}
+	    }
 #else
             float *real_data = (float *)mxGetData(res_data);
             float *imag_data = (float *)mxGetImagData(res_data);
-	    if (imag_data)
+	    if (imag_data && real_data)
 	    {
 	        for (int i = 0; i < m4->getObjectPtr()->get_number_of_elements(); i++)
     	        {
@@ -194,14 +218,16 @@ int AcquisitionMatlabGadget::process(GadgetContainerMessage<ISMRMRD::Acquisition
     	            m4->getObjectPtr()->get_data_ptr()[i] = real_data[i];
 	        }
 	    }
-#endif
 	    else
 	    {
                 GDEBUG("Failed to mxGetData from matgadget Queue\n");
                 return GADGET_FAIL;
 	    }
+#endif
+
+
+
             if (idx==0) GDEBUG("Received %u images from matgadget Queue\n", qlen);
-	
 	
 	    if (this->next()->putq(m3) < 0)
             {
