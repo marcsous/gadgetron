@@ -4,44 +4,41 @@ echo "This script will set up Gadgetron and related libraries in the home folder
 GT_WORKING_DIR=~/gadgetron
 GT_INSTALL_DIR=${GT_WORKING_DIR}/local
 
-# the branch to pull, can be changed
-BRANCHNAME=master
-
-# Build type
+# uild type (Release or Debug)
 BUILD_TYPE=Release
-# for debug, BUILD_TYPE=Debug
 
-# Generator
+# generator
 GENERATOR="Eclipse CDT4 - Unix Makefiles"
 
-# Disable Cuda
+# disable Cuda
 CUDA=false
 
-# Check Matlab path is set
+# -----------------------------------------------------------------------------------------
+# check environment variables - set these in ~/.bashrc
+# -----------------------------------------------------------------------------------------
 if [ -z ${MATLAB_ROOT} ]
 then
     echo Error! MATLAB_ROOT not set.
     exit 1
 fi
-echo Using MATLAB_ROOT=${MATLAB_ROOT}
+
+GADGETRON_HOME=${GT_WORKING_DIR}/local
+ISMRMRD_HOME=${GT_WORKING_DIR}/local
 
 # --------------------------------------------------------------------------------------------
-# pull source from git hub
-
+# pull sources from git hub
+# --------------------------------------------------------------------------------------------
 ISMRMRD_REPO=https://github.com/ismrmrd/ismrmrd.git
-ISMRMRD_BRANCH=${BRANCHNAME}
+ISMRMRD_BRANCH=master
 
-GT_REPO=https://github.com/marcsous/gadgetron
+GT_REPO=https://github.com/marcsous/gadgetron-matlab
 GT_BRANCH=Gadgetron3.17_stable 
 
+EXAMPLE_REPO=https://github.com/marcsous/gadgetron-example
+EXAMPLE_BRANCH=master
+
 GT_CONVERTER_REPO=https://github.com/ismrmrd/siemens_to_ismrmrd.git
-GT_CONVERTER_BRANCH=${BRANCHNAME}
-
-ISMRMRD_PYTHON_API_REPO=https://github.com/ismrmrd/ismrmrd-python.git
-ISMRMRD_PYTHON_API_BRANCH=${BRANCHNAME}
-
-ISMRMRD_PYTHON_TOOLS_REPO=https://github.com/ismrmrd/ismrmrd-python-tools.git
-ISMRMRD_PYTHON_TOOLS_BRANCH=${BRANCHNAME}
+GT_CONVERTER_BRANCH=master
 
 # ----------------------------------------------------------------------------------------------------------
 # clean the old installation
@@ -55,28 +52,12 @@ then
 fi
 
 rm -R -f ${GT_WORKING_DIR}/local
+mkdir ${GT_WORKING_DIR}
 mkdir ${GT_WORKING_DIR}/local
 mkdir ${GT_WORKING_DIR}/mrprogs
+mkdir ${GT_WORKING_DIR}/example
 
-GADGETRON_HOME=${GT_WORKING_DIR}/local
-ISMRMRD_HOME=${GT_WORKING_DIR}/local
 CMAKE_PREFIX_PATH=${GT_WORKING_DIR}/local/lib/cmake/ISMRMRD
-
-# ----------------------------------------------------------------------------------------------------------
-#ISMRMRD PYTHON API, require sudo to install
-# ----------------------------------------------------------------------------------------------------------
-cd ${GT_WORKING_DIR}/mrprogs
-git clone ${ISMRMRD_PYTHON_API_REPO}
-cd ismrmrd-python
-python setup.py install
-
-# ----------------------------------------------------------------------------------------------------------
-#ISMRMRD PYTHON TOOLS, require sudo to install
-# ----------------------------------------------------------------------------------------------------------
-cd ${GT_WORKING_DIR}/mrprogs
-git clone ${ISMRMRD_PYTHON_TOOLS_REPO}
-cd ismrmrd-python-tools
-python setup.py install
 
 # ----------------------------------------------------------------------------------------------------------
 # ismrmrd
@@ -136,7 +117,27 @@ make -j $(nproc)
 make install
 
 # ----------------------------------------------------------------------------------------------------------
+# example
+# ----------------------------------------------------------------------------------------------------------
+rm -R -f ${GT_WORKING_DIR}/example
+cd ${GT_WORKING_DIR}/example
+git clone  ${EXAMPLE_REPO} ${GT_WORKING_DIR}/example
+cd ${GT_WORKING_DIR}/example
+git checkout -b ${EXAMPLE_BRANCH} origin/${EXAMPLE_BRANCH}
+
+# ----------------------------------------------------------------------------------------------------------
 # make gadgetron ready
 # ----------------------------------------------------------------------------------------------------------
 cp -f ${GT_INSTALL_DIR}/share/gadgetron/config/gadgetron.xml.example ${GT_INSTALL_DIR}/share/gadgetron/config/gadgetron.xml
+
+# ----------------------------------------------------------------------------------------------------------
+# remind user to set environment variables
+# ----------------------------------------------------------------------------------------------------------
+echo
+echo Don''t forget to set environment variables in .bashrc
+echo -- export MATLAB_ROOT=${MATLAB_ROOT}
+echo -- export GADGETRON_HOME=${GADGETRON_HOME}
+echo -- export ISMRMRD_HOME=${ISMRMRD_HOME}
+echo Look in ${GT_WORKING_DIR}/example for an example 
+echo
 
