@@ -16,7 +16,7 @@ sudo apt-get install libhdf5-serial-dev cmake git-core \
     libxml2-dev libxslt-dev libpugixml-dev libhdf5-dev libplplot-dev libdcmtk-dev \
     python3-dev python3-pip python3-h5py python3-scipy python3-pyxb
 ```
-3. Add to ```~/.bashrc``` to set up paths in bash
+3. Add to ```~/.bashrc``` to set up paths for ```/home/user/gadgetron``` (no root required)
 ```
 export GADGETRON_HOME=~/gadgetron/local
 export ISMRMRD_HOME=~/gadgetron/local
@@ -41,4 +41,4 @@ addpath('/home/user/gadgetron/local/share/gadgetron/matlab/');
 03-10 11:45:50.878 INFO [main.cpp:205] Starting cloudBus: localhost:8002
 03-10 11:45:50.879 INFO [main.cpp:253] Configuring services, Running on port 9002
 ```
-8. Go to [gadgetron-example](https://github.com/marcsous/gadgetron-example) to see if it works
+8. Go to [gadgetron-example](https://github.com/marcsous/gadgetron-example) to do an example
