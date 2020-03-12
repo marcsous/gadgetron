@@ -18,9 +18,12 @@ sudo apt-get install libhdf5-serial-dev cmake git-core \
 ```
 3. Add to ```~/.bashrc``` to set up paths in bash
 ```
-export PATH=$PATH:/home/user/gadgetron/local/bin
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/user/gadgetron/local/lib
-alias gadgetron="export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MATLAB_ROOT/bin/glnxa64;gadgetron"
+export GADGETRON_HOME=~/gadgetron/local
+export ISMRMRD_HOME=~/gadgetron/local
+export MATLAB_ROOT=/usr/local/MATLAB/R2019b
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/gadgetron/local/lib
+export PATH=$PATH:~/gadgetron/local/bin
+alias gadgetron="LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MATLAB_ROOT/bin/glnxa64 gadgetron"
 ```
 4. Add to ```~/Documents/MATLAB/startup.m``` to set up paths in matlab
 ```
@@ -29,7 +32,7 @@ addpath('/home/user/gadgetron/local/share/gadgetron/matlab/');
 ```
 5. Execute ```source ~/.bashrc``` to make paths active
 
-6. Execute ```GT_install3.17.sh``` to install in /home/user/gadgetron (instead of /usr)
+6. Execute ```GT_install3.17.sh``` to install in /home/user/gadgetron (no root required)
 
 7. Execute ```gadgetron``` and (hopefully) see the following:
 ```
@@ -38,3 +41,4 @@ addpath('/home/user/gadgetron/local/share/gadgetron/matlab/');
 03-10 11:45:50.878 INFO [main.cpp:205] Starting cloudBus: localhost:8002
 03-10 11:45:50.879 INFO [main.cpp:253] Configuring services, Running on port 9002
 ```
+8. Go to [gadgetron-example](https://github.com/marcsous/gadgetron-example) to see if it works
