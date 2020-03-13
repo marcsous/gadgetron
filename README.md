@@ -35,10 +35,10 @@ if [ -n "$BASH_VERSION" ]; then
 fi
 ```
 
-4. Add to ```~/Documents/MATLAB/startup.m``` to set up paths in matlab
+4. Add to ```~/Documents/MATLAB/startup.m``` to set up paths in matlab. It would be nice to read ISMRMRD_HOME and GADGETRON_HOME using getenv() or system() but it doesn't work for me
 ```
-addpath('/home/user/gadgetron/local/share/ismrmrd/matlab/');
-addpath('/home/user/gadgetron/local/share/gadgetron/matlab/');
+addpath('~/gadgetron/local/share/ismrmrd/matlab/');
+addpath('~/gadgetron/local/share/gadgetron/matlab/');
 ```
 5. Execute ```source ~/.bashrc``` to make paths active
 
