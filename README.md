@@ -25,6 +25,15 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/gadgetron/local/lib
 export PATH=$PATH:~/gadgetron/local/bin
 alias gadgetron="LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MATLAB_ROOT/bin/glnxa64 gadgetron"
 ```
+Also make sure bashrc gets called
+```if [ -n "$BASH_VERSION" ]; then
+    # include .bashrc if it exists
+    if [ -f "$HOME/.bashrc" ]; then
+    . "$HOME/.bashrc"
+    fi
+fi
+```
+
 4. Add to ```~/Documents/MATLAB/startup.m``` to set up paths in matlab
 ```
 addpath('/home/user/gadgetron/local/share/ismrmrd/matlab/');
