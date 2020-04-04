@@ -18,12 +18,16 @@ sudo apt-get install libhdf5-serial-dev cmake git-core \
 ```
 3. Add to ```~/.bashrc``` to set up paths for ```/home/user/gadgetron``` (no root required)
 ```
-export GADGETRON_HOME=~/gadgetron/local
-export ISMRMRD_HOME=~/gadgetron/local
+## gadgetron stuff 
+export GADGETRON_HOME=~/gadgetron3.17/local
+export ISMRMRD_HOME=$GADGETRON_HOME
 export MATLAB_ROOT=/usr/local/MATLAB/R2019b
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/gadgetron/local/lib
-export PATH=$PATH:~/gadgetron/local/bin
+export PATH=$PATH:$GADGETRON_HOME/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$GADGETRON_HOME/lib
+
+## tricky - need to adjust the path just for the process running gadgetron
 alias gadgetron="LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MATLAB_ROOT/bin/glnxa64 gadgetron"
+
 ```
 Also add the following to ```~/.profile``` sure the bashrc gets called
 ```
@@ -35,14 +39,14 @@ if [ -n "$BASH_VERSION" ]; then
 fi
 ```
 
-4. Add to ```~/Documents/MATLAB/startup.m``` to set up paths in matlab. It would be nice to read ISMRMRD_HOME and GADGETRON_HOME using getenv() or system() but it doesn't work for me
+4. Add to ```~/Documents/MATLAB/startup.m``` to set up paths in matlab. It would be nice to read ISMRMRD_HOME and GADGETRON_HOME using getenv() but it doesn't work for me
 ```
-addpath('~/gadgetron/local/share/ismrmrd/matlab/');
-addpath('~/gadgetron/local/share/gadgetron/matlab/');
+addpath('~/gadgetron3.17/local/share/ismrmrd/matlab/');
+addpath('~/gadgetron3.17/local/share/gadgetron/matlab/');
 ```
 5. Execute ```source ~/.bashrc``` to make paths active
 
-6. Copy ```GT_install3.17.sh```, chmod +x and execture to install in ```/home/user/gadgetron``` (no root required)
+6. Copy ```GT_install3.17.sh```, chmod +x and execute to install in ```/home/user/gadgetron3.17``` (no root required)
 
 7. Execute ```gadgetron``` and (hopefully) see the following:
 ```
