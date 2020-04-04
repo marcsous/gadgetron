@@ -1,10 +1,44 @@
+# https://github.com/gadgetron/gadgetron/wiki/Install-gadgetron-at-Ubuntu-16.04
+
 echo "This script will set up Gadgetron and related libraries in the home folder."
 
-# set up the working directory to be the home folder
-GT_WORKING_DIR=~/gadgetron
-GT_INSTALL_DIR=${GT_WORKING_DIR}/local
+# -----------------------------------------------------------------------------------------
+# check environment variables - set in ~/.bashrc as follows
+#
+## gadgetron stuff 
+# export GADGETRON_HOME=~/gadgetron3.17/local
+# export ISMRMRD_HOME=$GADGETRON_HOME
+# export MATLAB_ROOT=/usr/local/MATLAB/R2019b
+# export PATH=$PATH:$GADGETRON_HOME/bin
+# export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$GADGETRON_HOME/lib
 
-# uild type (Release or Debug)
+## tricky - need to adjust the path just for the process running gadgetron
+# alias gadgetron="LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MATLAB_ROOT/bin/glnxa64 gadgetron"
+#
+# -----------------------------------------------------------------------------------------
+if [ -z ${MATLAB_ROOT} ]
+then
+    echo Error! MATLAB_ROOT not set.
+    exit 1
+fi
+if [ -z ${GADGETRON_HOME} ]
+then
+    echo Error! GADGETRON_HOME not set.
+    exit 1
+fi
+if [ -z ${ISMRMRD_HOME} ]
+then
+    echo Error! ISMRMRD_HOME not set.
+    exit 1
+fi
+# -----------------------------------------------------------------------------------------
+# set up the working directory to be the home folder (not /usr/local)
+# -----------------------------------------------------------------------------------------
+
+GT_INSTALL_DIR=$GADGETRON_HOME
+GT_WORKING_DIR=`dirname $GADGETRON_HOME`
+
+# build type (Release or Debug)
 BUILD_TYPE=Release
 
 # generator
@@ -13,17 +47,8 @@ GENERATOR="Eclipse CDT4 - Unix Makefiles"
 # disable Cuda
 CUDA=false
 
-# -----------------------------------------------------------------------------------------
-# check environment variables - set these in ~/.bashrc
-# -----------------------------------------------------------------------------------------
-if [ -z ${MATLAB_ROOT} ]
-then
-    echo Error! MATLAB_ROOT not set.
-    exit 1
-fi
-
-GADGETRON_HOME=${GT_WORKING_DIR}/local
-ISMRMRD_HOME=${GT_WORKING_DIR}/local
+# disable Python
+PYTHON=false
 
 # --------------------------------------------------------------------------------------------
 # pull sources from git hub
@@ -92,11 +117,11 @@ cd ${GT_WORKING_DIR}/mrprogs
 mkdir build_gadgetron_${BUILD_TYPE}
 cd ${GT_WORKING_DIR}/mrprogs/build_gadgetron_${BUILD_TYPE}
 
-cmake -DUSE_CUDA=${CUDA} -G "${GENERATOR}" -DCMAKE_INSTALL_PREFIX=${GT_INSTALL_DIR} -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_PREFIX_PATH=${GT_WORKING_DIR}/local/lib/cmake/ISMRMRD ../gadgetron
+cmake -DUSE_CUDA=${CUDA} -DBUILD_PYTHON_SUPPORT=${PYTHON} -G "${GENERATOR}" -DCMAKE_INSTALL_PREFIX=${GT_INSTALL_DIR} -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_PREFIX_PATH=${GT_WORKING_DIR}/local/lib/cmake/ISMRMRD ../gadgetron
 
 make -j $(nproc)
 make install
-    
+
 # ----------------------------------------------------------------------------------------------------------
 # siemens_to_ismrmrd
 # ----------------------------------------------------------------------------------------------------------
