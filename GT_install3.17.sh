@@ -21,6 +21,12 @@ then
     echo Error! MATLAB_ROOT not set.
     exit 1
 fi
+if [ ! -d ${MATLAB_ROOT} ]
+then
+    echo Error! MATLAB_ROOT ${MATLAB_ROOT} does not exist
+    echo Add to ~/.bashrc: export MATLAB_ROOT=/usr/local/MATLAB/R20xxx
+    exit 1 
+fi
 if [ -z ${GADGETRON_HOME} ]
 then
     echo Error! GADGETRON_HOME not set.
