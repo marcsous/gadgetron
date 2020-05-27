@@ -16,28 +16,18 @@ sudo apt-get install libhdf5-serial-dev cmake git-core \
     libxml2-dev libxslt-dev libpugixml-dev libhdf5-dev libplplot-dev libdcmtk-dev \
     python3-dev python3-pip python3-h5py python3-scipy python3-pyxb
 ```
-3. Add to ```~/.bashrc``` to set up paths for ```/home/user/gadgetron``` (no root required)
-```
+3. Add to ```~/.bashrc``` to set up paths for ```/home/user/gadgetron3.17``` (no root required)
+<pre>
 ## gadgetron stuff 
 export GADGETRON_HOME=~/gadgetron3.17/local
 export ISMRMRD_HOME=$GADGETRON_HOME
-export MATLAB_ROOT=/usr/local/MATLAB/R2019b
 export PATH=$PATH:$GADGETRON_HOME/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$GADGETRON_HOME/lib
+<b>export MATLAB_ROOT=/usr/local/MATLAB/R2020a</b>
 
 ## tricky - need to adjust the path just for the process running gadgetron
 alias gadgetron="LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MATLAB_ROOT/bin/glnxa64 gadgetron"
-
-```
-Also add the following to ```~/.profile``` sure the bashrc gets called
-```
-if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-    . "$HOME/.bashrc"
-    fi
-fi
-```
+</pre>
 
 4. Add to ```~/Documents/MATLAB/startup.m``` to set up paths in matlab. It would be nice to read ISMRMRD_HOME and GADGETRON_HOME using getenv() but it doesn't work for me
 ```
