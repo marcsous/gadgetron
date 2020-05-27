@@ -23,6 +23,8 @@ export GADGETRON_HOME=~/gadgetron3.17/local
 export ISMRMRD_HOME=$GADGETRON_HOME
 export PATH=$PATH:$GADGETRON_HOME/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$GADGETRON_HOME/lib
+
+<b>## path to matlab - EDIT THIS LINE AS NEEDED</b>
 <b>export MATLAB_ROOT=/usr/local/MATLAB/R2020a</b>
 
 ## tricky - need to adjust the path just for the process running gadgetron
