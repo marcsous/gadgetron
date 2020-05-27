@@ -36,7 +36,7 @@ addpath('~/gadgetron3.17/local/share/gadgetron/matlab/');
 ```
 5. Execute ```source ~/.bashrc``` to make paths active
 
-6. Copy ```GT_install3.17.sh```, chmod +x and execute to install in ```/home/user/gadgetron3.17``` (no root required)
+6. Copy [```GT_install3.17.sh```](https://github.com/marcsous/gadgetron-matlab/blob/Gadgetron3.17_stable/GT_install3.17.sh), chmod +x and execute to install in ```/home/user/gadgetron3.17``` (no root required)
 
 7. Execute ```gadgetron``` and (hopefully) see the following:
 ```
