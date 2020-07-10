@@ -28,7 +28,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$GADGETRON_HOME/lib
 <b>export MATLAB_ROOT=/usr/local/MATLAB/R2020a</b>
 
 ## tricky - need to adjust the path just for the process running gadgetron
-alias gadgetron="LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MATLAB_ROOT/bin/glnxa64 gadgetron"
+alias gadgetron="LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MATLAB_ROOT/bin/glnxa64 gadgetron -p 9001"
 </pre>
 
 4. Add to ```~/Documents/MATLAB/startup.m``` to set up paths in matlab. It would be nice to read ISMRMRD_HOME and GADGETRON_HOME using getenv() but it doesn't work for me
