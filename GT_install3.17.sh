@@ -2,19 +2,22 @@
 
 echo "This script will set up Gadgetron and related libraries in the home folder."
 
-# -----------------------------------------------------------------------------------------
-# check environment variables - set in ~/.bashrc as follows
+## The following should be in your .bashrc file
 #
-## gadgetron stuff 
-# export GADGETRON_HOME=~/gadgetron3.17/local
-# export ISMRMRD_HOME=$GADGETRON_HOME
-# export MATLAB_ROOT=/usr/local/MATLAB/R2019b
-# export PATH=$PATH:$GADGETRON_HOME/bin
-# export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$GADGETRON_HOME/lib
+#  ## gadgetron - use port 9001 instead of default 9002 for main branch 
+#  export GADGETRON_HOME=~/gadgetron3.17/local
+#  export ISMRMRD_HOME=$GADGETRON_HOME
+#  export PATH=$PATH:$GADGETRON_HOME/bin
+#  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$GADGETRON_HOME/lib
+#
+#  ## path to matlab - EDIT THIS LINE AS NEEDED
+#  export MATLAB_ROOT=/usr/local/MATLAB/R2017b
+#
+#  ## tricky - need to adjust the path just for the process running gadgetron
+#  alias gadgetron="LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MATLAB_ROOT/bin/glnxa64 gadgetron -p 9001"
+#
+## End of bashrc
 
-## tricky - need to adjust the path just for the process running gadgetron
-# alias gadgetron="LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MATLAB_ROOT/bin/glnxa64 gadgetron"
-#
 # -----------------------------------------------------------------------------------------
 if [ -z ${MATLAB_ROOT} ]
 then
@@ -87,6 +90,7 @@ mkdir ${GT_WORKING_DIR}
 mkdir ${GT_WORKING_DIR}/local
 mkdir ${GT_WORKING_DIR}/mrprogs
 mkdir ${GT_WORKING_DIR}/example
+mkdir ${GT_WORKING_DIR}/recon
 
 CMAKE_PREFIX_PATH=${GT_WORKING_DIR}/local/lib/cmake/ISMRMRD
 
