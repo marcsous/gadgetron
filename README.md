@@ -18,7 +18,7 @@ sudo apt-get install libhdf5-serial-dev cmake git-core \
 ```
 3. Add to ```~/.bashrc``` to set up paths for ```/home/user/gadgetron3.17``` (no root required)
 <pre>
-## gadgetron stuff 
+## gadgetron - use port 9001 instead of default 9002 for main branch 
 export GADGETRON_HOME=~/gadgetron3.17/local
 export ISMRMRD_HOME=$GADGETRON_HOME
 export PATH=$PATH:$GADGETRON_HOME/bin
