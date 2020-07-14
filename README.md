@@ -31,14 +31,15 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$GADGETRON_HOME/lib
 alias gadgetron="LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MATLAB_ROOT/bin/glnxa64 gadgetron -p 9001"
 </pre>
 
-4. Add to ```~/Documents/MATLAB/startup.m``` to set up paths in matlab. It would be nice to read ISMRMRD_HOME and GADGETRON_HOME using getenv() but it doesn't work for me
+4. Execute ```source ~/.bashrc``` to make paths active
+
+5. Copy [```GT_install3.17.sh```](https://github.com/marcsous/gadgetron-matlab/blob/Gadgetron3.17_stable/GT_install3.17.sh), chmod +x and execute to install in ```/home/user/gadgetron3.17``` (no root required)
+
+6. Add to ```~/Documents/MATLAB/startup.m``` to set up paths in matlab. It would be nice to read ISMRMRD_HOME and GADGETRON_HOME using getenv() but it doesn't work for me
 ```
 addpath('~/gadgetron3.17/local/share/ismrmrd/matlab/');
 addpath('~/gadgetron3.17/local/share/gadgetron/matlab/');
 ```
-5. Execute ```source ~/.bashrc``` to make paths active
-
-6. Copy [```GT_install3.17.sh```](https://github.com/marcsous/gadgetron-matlab/blob/Gadgetron3.17_stable/GT_install3.17.sh), chmod +x and execute to install in ```/home/user/gadgetron3.17``` (no root required)
 
 7. Execute ```gadgetron``` and (hopefully) see the following:
 ```
