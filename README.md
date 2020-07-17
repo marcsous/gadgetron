@@ -37,7 +37,7 @@ alias gadgetron="LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MATLAB_ROOT/bin/glnxa64 gadge
 
 6. Add to ```~/Documents/MATLAB/startup.m``` to set up paths in matlab. It would be nice to read ISMRMRD_HOME and GADGETRON_HOME using getenv() but it doesn't work for me
 ```
-addpath('~/gadgetron3.17/recon');
+addpath('~/gadgetron3.17/recon/');
 addpath('~/gadgetron3.17/local/share/ismrmrd/matlab/');
 addpath('~/gadgetron3.17/local/share/gadgetron/matlab/');
 ```
