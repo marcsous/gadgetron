@@ -11,7 +11,7 @@ echo "This script will set up Gadgetron and related libraries in the home folder
 #  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$GADGETRON_HOME/lib
 #
 #  ## path to matlab - EDIT THIS LINE AS NEEDED
-#  export MATLAB_ROOT=/usr/local/MATLAB/R2017b
+#  export MATLAB_ROOT=/usr/local/MATLAB/R2020a
 #
 #  ## tricky - need to adjust the path just for the process running gadgetron
 #  alias gadgetron="LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MATLAB_ROOT/bin/glnxa64 gadgetron -p 9001"
@@ -86,6 +86,10 @@ then
 fi
 
 rm -R -f ${GT_WORKING_DIR}/local
+rm -R -f ${GT_WORKING_DIR}/mrprogs
+rm -R -f ${GT_WORKING_DIR}/example
+# don't delete recon as it contain user programs
+
 mkdir ${GT_WORKING_DIR}
 mkdir ${GT_WORKING_DIR}/local
 mkdir ${GT_WORKING_DIR}/mrprogs
@@ -154,7 +158,6 @@ make install
 # ----------------------------------------------------------------------------------------------------------
 # example
 # ----------------------------------------------------------------------------------------------------------
-rm -R -f ${GT_WORKING_DIR}/example
 cd ${GT_WORKING_DIR}/example
 git clone  ${EXAMPLE_REPO} ${GT_WORKING_DIR}/example
 cd ${GT_WORKING_DIR}/example
@@ -164,6 +167,15 @@ git checkout -b ${EXAMPLE_BRANCH} origin/${EXAMPLE_BRANCH}
 # make gadgetron ready
 # ----------------------------------------------------------------------------------------------------------
 cp -f ${GT_INSTALL_DIR}/share/gadgetron/config/gadgetron.xml.example ${GT_INSTALL_DIR}/share/gadgetron/config/gadgetron.xml
+
+# ----------------------------------------------------------------------------------------------------------
+# move config folder and key xml files to /gadgetron/recon
+# ----------------------------------------------------------------------------------------------------------
+mv ${GT_INSTALL_DIR}/share/gadgetron/config  ${GT_INSTALL_DIR}/share/gadgetron/config.original
+ln -s $GT_WORKING_DIR/recon ${GT_INSTALL_DIR}/share/gadgetron/config
+cp ${GT_INSTALL_DIR}/share/gadgetron/config.original/gtquery.xml $GT_WORKING_DIR/recon/
+cp ${GT_INSTALL_DIR}/share/gadgetron/config.original/gadgetron.xml $GT_WORKING_DIR/recon/
+cp ${GT_INSTALL_DIR}/share/gadgetron/config.original/default_measurement_dependencies.xml $GT_WORKING_DIR/recon/
 
 # ----------------------------------------------------------------------------------------------------------
 # remind user to set environment variables
