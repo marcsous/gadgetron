@@ -169,13 +169,9 @@ git checkout -b ${EXAMPLE_BRANCH} origin/${EXAMPLE_BRANCH}
 cp -f ${GT_INSTALL_DIR}/share/gadgetron/config/gadgetron.xml.example ${GT_INSTALL_DIR}/share/gadgetron/config/gadgetron.xml
 
 # ----------------------------------------------------------------------------------------------------------
-# move config folder and key xml files to /gadgetron/recon
+# link config folder to point to ~/gadgetron3.17/recon (and modify app/gadgetron/GadgetStreamController.cpp)
 # ----------------------------------------------------------------------------------------------------------
-mv ${GT_INSTALL_DIR}/share/gadgetron/config  ${GT_INSTALL_DIR}/share/gadgetron/config.original
-ln -s $GT_WORKING_DIR/recon ${GT_INSTALL_DIR}/share/gadgetron/config
-cp ${GT_INSTALL_DIR}/share/gadgetron/config.original/gtquery.xml $GT_WORKING_DIR/recon/
-cp ${GT_INSTALL_DIR}/share/gadgetron/config.original/gadgetron.xml $GT_WORKING_DIR/recon/
-cp ${GT_INSTALL_DIR}/share/gadgetron/config.original/default_measurement_dependencies.xml $GT_WORKING_DIR/recon/
+ln -s $GT_WORKING_DIR/recon ${GT_INSTALL_DIR}/share/gadgetron/config/recon
 
 # ----------------------------------------------------------------------------------------------------------
 # remind user to set environment variables
