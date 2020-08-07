@@ -198,7 +198,7 @@ int GadgetStreamController::handle_close (ACE_HANDLE, ACE_Reactor_Mask mask)
 int GadgetStreamController::configure_from_file(std::string filename)
 {
   //boost::filesystem::path full_path = gadgetron_home_ / GADGETRON_CONFIG_PATH / filename;
-  boost::filesystem::path full_path = gadgetron_home_ / GADGETRON_CONFIG_PATH / filename / "recon"; // MB move it somewhere convenient
+  boost::filesystem::path full_path = gadgetron_home_ / GADGETRON_CONFIG_PATH / "recon" / filename; // MB move it somewhere more convenient
 	
   GINFO("Running configuration: %s\n", full_path.c_str());
 
