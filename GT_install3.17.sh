@@ -168,6 +168,11 @@ git checkout -b ${EXAMPLE_BRANCH} origin/${EXAMPLE_BRANCH}
 # ----------------------------------------------------------------------------------------------------------
 cp -f ${GT_INSTALL_DIR}/share/gadgetron/config/gadgetron.xml.example ${GT_INSTALL_DIR}/share/gadgetron/config/gadgetron.xml
 
+# copy over some necessary files
+cp ${GT_INSTALL_DIR}/share/gadgetron/config/gtquery.xml $GT_WORKING_DIR/recon
+cp ${GT_INSTALL_DIR}/share/gadgetron/config/gadgetron.xml $GT_WORKING_DIR/recon
+cp ${GT_INSTALL_DIR}/share/gadgetron/config/default_measurement_dependencies.xml $GT_WORKING_DIR/recon
+
 # ----------------------------------------------------------------------------------------------------------
 # link config folder to point to ~/gadgetron3.17/recon (and modify app/gadgetron/GadgetStreamController.cpp)
 # ----------------------------------------------------------------------------------------------------------
