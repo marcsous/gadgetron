@@ -16,7 +16,7 @@ sudo apt-get install libhdf5-serial-dev cmake git-core \
     libxml2-dev libxslt-dev libpugixml-dev libhdf5-dev libplplot-dev libdcmtk-dev \
     python3-dev python3-pip python3-h5py python3-scipy python3-pyxb
 ```
-3. Add to ```~/.bashrc``` to set up paths for ```/home/user/gadgetron3.17``` (no root required)
+3. Add to ```~/.bashrc``` to set up paths for ```~/gadgetron3.17``` (no root required)
 <pre>
 ## gadgetron - use port 9001 instead of default 9002 for main branch 
 export GADGETRON_HOME=~/gadgetron3.17/local
@@ -33,7 +33,7 @@ alias gadgetron="PATH=$MATLAB_ROOT/bin:$PATH;LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$M
 
 4. Execute ```source ~/.bashrc``` to make paths active
 
-5. Copy [```GT_install3.17.sh```](https://github.com/marcsous/gadgetron-matlab/blob/Gadgetron3.17_stable/GT_install3.17.sh), chmod +x and execute to install in ```/home/user/gadgetron3.17``` (no root required)
+5. Copy [```GT_install3.17.sh```](https://github.com/marcsous/gadgetron-matlab/blob/Gadgetron3.17_stable/GT_install3.17.sh), chmod +x and execute to install in ```~/gadgetron3.17``` (no root required)
 
 6. Add to ```~/Documents/MATLAB/startup.m``` to set up paths in matlab. It would be nice to read ISMRMRD_HOME and GADGETRON_HOME using getenv() but it doesn't work for me
 ```
