@@ -76,8 +76,8 @@ classdef BaseGadget < handle
                 g.Q(idx).type = int32(0);
 		        disp('Illegal header type found')
             end
-            % put data on the queue (MUST be single)
-            g.Q(idx).data = single(data);
+            % put data on the queue (MUST be single on CPU)
+            g.Q(idx).data = gather(single(data));
         end
 
     end
